@@ -51,5 +51,8 @@ class LinearRegression:
 
     fig, ax = plt.subplots()
     x_vals = np.linspace(min(train_input), max(train_input), 100)
-    line, = ax.plot(x_vals, self.parameters['m'] * x_vals + self.parameters['c'], color='r')
-    
+    line, = ax.plot(x_vals, self.parameters['m'] * x_vals + self.parameters['c'], 
+                    color='r', label='Regression Line')
+    ax.scatter(train_input,train_output, marker='o', color='green',label='Training Data')
+    ax.set_ylim(0, max(train_output) + 1)
+        
