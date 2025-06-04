@@ -39,4 +39,17 @@ class LinearRegression:
     derivatives['dc'] = dc 
     return derivatives
   
-  
+  def update_parameters(self, derivatives, learning_rate):
+    self.parameters['m'] = self.parameters['m'] - learning_rate * derivatives['dm']
+    self.parameters['c'] = self.parameters['c'] - learning_rate * derivatives['dc']
+
+  def train(self, train_input, train_output, learning_rate, iters):
+    self.parameters['m'] = np.random.uniform(0,1) * -1
+    self.parameters['c'] = np.random.uniform(0,1) * -1
+
+    self.loss = []
+
+    fig, ax = plt.subplots()
+    x_vals = np.linspace(min(train_input), max(train_input), 100)
+    line, = ax.plot(x_vals, self.parameters['m'] * x_vals + self.parameters['c'], color='r')
+    
