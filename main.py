@@ -52,7 +52,32 @@ class LinearRegression:
     fig, ax = plt.subplots()
     x_vals = np.linspace(min(train_input), max(train_input), 100)
     line, = ax.plot(x_vals, self.parameters['m'] * x_vals + self.parameters['c'], 
-                    color='r', label='Regression Line')
+                    color='red', label='Regression Line')
     ax.scatter(train_input,train_output, marker='o', color='green',label='Training Data')
     ax.set_ylim(0, max(train_output) + 1)
-        
+
+    def update(frame):
+      predictions = self.forward_propagation(train_output)
+      cost = self.cost_function(predictions, train_output)
+      derivatives = self.backward_propagation(train_input, train_output, predictions)
+      self.update_parameters(derivatives, learning_rate)
+      line.set_ydata(self.parameters['m'] * x_vals + self.parameters['c'])
+      self.loss.append(cost)
+      print("Iteration = {}, Loss = {}".format(frame + 1, cost))
+      return line,
+
+    ani = FuncAnimation(fig, update, frames=iters, interval=200, blit=True)
+    ani.save('linear_regression_A.gif', writer='ffmpeg')
+
+    plt.xlabel('Input')
+    plt.ylabel('Output')
+    plt.title('Linear Regression')
+    plt.legend()
+    plt.show()
+
+    return self.parameters, self.loss
+  
+
+test = LinearRegression()
+test.train(train_input, train_output, .001, 100)
+  
