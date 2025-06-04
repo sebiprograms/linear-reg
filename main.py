@@ -15,3 +15,19 @@ train_output = np.array(data.x[0:500]).reshape(500,1)
 
 test_input = np.array(data.x[500:700]).reshape(199,1)
 test_output = np.array(data.y[500:700]).reshape(199,1)
+
+class LinearRegression:
+  def __init__(self):
+    self.parameters = {}
+  
+  def forward_propagation(self, train_input):
+    m = self.parameters['m']
+    c = self.parameters['c']
+    predications = np.multiply(m, train_input) + c
+    return predications
+  
+  def cost_function(self, predictions, train_output):
+    cost = np.mean((train_output-predictions) ** 2)
+    return cost
+  
+  
