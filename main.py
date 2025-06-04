@@ -30,4 +30,13 @@ class LinearRegression:
     cost = np.mean((train_output-predictions) ** 2)
     return cost
   
+  def backward_propagation(self, train_input, train_output, predictions):
+    derivatives = {}
+    df = (predictions-train_output)
+    dm = 2 * np.mean(np.multiply(train_input, df))
+    dc = 2 * np.mean(df)
+    derivatives['dm'] = dm
+    derivatives['dc'] = dc 
+    return derivatives
+  
   
